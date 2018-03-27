@@ -12,7 +12,7 @@ public class Main extends Application {
 
   @Override
   public void start(Stage primaryStage) throws Exception{
-    String file = "file:///Users/" + System.getenv("USER") + "/programs/java_projects/media_player/src/application/test.mp4";
+    String file = "file:///Users/" + System.getenv("USER") + "/programs/java_projects/test.mp4";
     Player player = new Player(file);
     Scene scene = new Scene(player, 1280, 760, Color.BLACK);
     primaryStage.setScene(scene);
