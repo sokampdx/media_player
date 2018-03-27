@@ -23,3 +23,6 @@ hs_err_pid*
 
 # output #
 out/
+
+# mp4 #
+*.mp4
