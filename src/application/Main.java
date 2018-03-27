@@ -1,5 +1,6 @@
 package sample;
 
+import application.Player;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Player player = new Player("file:///Users/anthonyso/Documents/programs/java_projects/test.mp4");
 
     }
 
