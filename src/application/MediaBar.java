@@ -1,5 +1,8 @@
 package application;
 
+import javafx.application.Platform;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,8 +30,25 @@ public class MediaBar extends HBox {
     build_media_components();
 
     handle_play_button();
+    handle_slider();
   }
 
+  private void handle_slider() {
+    player.currentTimeProperty().addListener(new InvalidationListener() {
+      public void invalidated(Observable observable) {
+        updateValues();
+      }
+    });
+  }
+
+  protected void updateValues() {
+    Platform.runLater(new Runnable() {
+      public void run() {
+        time.setValue(player.getCurrentTime().toMillis() / player.getTotalDuration().toMillis() * 100);
+      }
+    });
+  }
+  
   private void handle_play_button() {
     playButton.setOnAction(new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
