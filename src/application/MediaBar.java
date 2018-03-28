@@ -32,6 +32,17 @@ public class MediaBar extends HBox {
     handle_play_button();
     handle_playing_time_slider();
     handle_seeking_time_slider();
+    handle_volume_slider();
+  }
+
+  private void handle_volume_slider() {
+    vol.valueProperty().addListener(new InvalidationListener() {
+      public void invalidated(Observable observable) {
+        if(vol.isPressed()) {
+          player.setVolume(vol.getValue() / 100);
+        }
+      }
+    });
   }
 
   private void handle_seeking_time_slider() {
