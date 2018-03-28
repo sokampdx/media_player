@@ -1,5 +1,7 @@
 package application;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,13 +11,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.media.MediaPlayer;
 
+import static javafx.scene.media.MediaPlayer.*;
+
 public class MediaBar extends HBox {
   Slider time = new Slider();
   Slider vol = new Slider();
-
   Button playButton = new Button("||");
   Label volume = new Label("Volume: ");
-
   MediaPlayer player;
 
   public MediaBar(MediaPlayer play) {
@@ -23,6 +25,43 @@ public class MediaBar extends HBox {
     setup_volume_slider();
     setup_player_frame();
     build_media_components();
+
+    handle_play_button();
+  }
+
+  private void handle_play_button() {
+    playButton.setOnAction(new EventHandler<ActionEvent>() {
+      public void handle(ActionEvent event) {
+        Status status = player.getStatus();
+
+        if(status == Status.PLAYING) {
+          handle_playing_status();
+        }
+
+        if(is_paused(status)) {
+          start_playing();
+        }
+      }
+
+      private boolean is_paused(Status status) {
+        return status == Status.PAUSED || status == Status.HALTED || status == Status.STOPPED;
+      }
+
+      private void start_playing() {
+        player.play();
+        playButton.setText("||");
+      }
+
+      private void handle_playing_status() {
+        if (player.getCurrentTime().greaterThanOrEqualTo(player.getTotalDuration())) {
+          player.seek(player.getStartTime());
+          player.play();
+        } else {
+          player.pause();
+          playButton.setText(">");
+        }
+      }
+    });
   }
 
   private void build_media_components() {
