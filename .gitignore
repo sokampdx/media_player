@@ -26,3 +26,11 @@ out/
 
 # mp4 #
 *.mp4
+
+# idea #
+.idea/workspace.xml
+.idea/tasks.xml
+**/*.iml
+**/dataSources.ids
+**/datasources.xml
+
