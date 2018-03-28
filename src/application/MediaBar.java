@@ -30,10 +30,21 @@ public class MediaBar extends HBox {
     build_media_components();
 
     handle_play_button();
-    handle_slider();
+    handle_playing_time_slider();
+    handle_seeking_time_slider();
   }
 
-  private void handle_slider() {
+  private void handle_seeking_time_slider() {
+    time.valueProperty().addListener(new InvalidationListener() {
+      public void invalidated(Observable observable) {
+        if(time.isPressed()) {
+          player.seek(player.getMedia().getDuration().multiply(time.getValue() / 100));
+        }
+      }
+    });
+  }
+
+  private void handle_playing_time_slider() {
     player.currentTimeProperty().addListener(new InvalidationListener() {
       public void invalidated(Observable observable) {
         updateValues();
@@ -48,7 +59,7 @@ public class MediaBar extends HBox {
       }
     });
   }
-  
+
   private void handle_play_button() {
     playButton.setOnAction(new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
